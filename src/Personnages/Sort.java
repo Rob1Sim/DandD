@@ -2,8 +2,12 @@ package Personnages;
 
 public abstract class Sort {
     protected String nom;
+    protected int dg;
 
-    protected abstract void lancerUnSort();
+    public int getDg() {
+        return dg;
+    }
+
     public String getNom() {
         return nom;
     }

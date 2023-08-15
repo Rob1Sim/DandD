@@ -1,10 +1,15 @@
 package Personnages;
 
-public abstract class Classe {
-    protected String nom;
-    protected String description;
-    protected String habilite;
+public class Classe {
+    private String nom;
+    private String description;
+    private String habilite;
 
+    public Classe(String nom, String description, String habilite){
+        this.nom = nom;
+        this.description = description;
+        this.habilite = habilite;
+    }
     public String getNom() {
         return nom;
     }

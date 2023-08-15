@@ -3,9 +3,7 @@ package Personnages;
 import Jeu.Jet;
 import Personnages.Error.CompetenceNotFound;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class abstraite représantant des personnages
@@ -21,6 +19,7 @@ public abstract class Personnages {
     protected int sagesse;
     protected int charisme;
     protected Race race;
+    protected Classe classe;
     protected Equipement[] equipements;
     protected Sort[] sorts;
 
@@ -57,6 +56,36 @@ public abstract class Personnages {
         };
 
     }
+
+    /**
+     * Lance un sort sur un autre personnage
+     * @param sort Le sort à lancer il doit faire partie des sorts que le personnages connais
+     * @param cible Un autre personnages
+     */
+    public void lancerUnSort(Sort sort,Personnages cible){
+        while (!Arrays.asList(sorts).contains(sort)){
+            System.out.println("Vous ne connaissez pas ce sort");
+        }
+        System.out.println(this.getNom()+ " lance "+sort.getNom() + " sur "+ cible.getNom());
+
+        if (Jet.jetJoueurContreJoueur(this,cible,"dex")){
+            cible.prendreDesDG(sort.getDg());
+        }else {
+            System.out.println(cible.getNom() + " évite !");
+        }
+    }
+
+    /**
+     * Applique les dégats d'une attaque
+     * @param dg Dégats que le personnage doit recevoir
+     */
+    public void prendreDesDG(int dg){
+        if (this.getCA() - dg < 0 ){
+            int pvFinal = this.getPv() - (dg - this.getCA());
+            System.out.println(this.getNom() + " subis "+ dg + " il lui reste "+ pvFinal + "PV !");
+            setPv(pvFinal);
+        }
+    }
     public Race getRace() {
         return race;
     }
@@ -66,6 +95,9 @@ public abstract class Personnages {
 
     public Sort[] getSorts() {
         return sorts;
+    }
+    public Classe getClasse() {
+        return classe;
     }
 
     public int getPv() {
@@ -104,4 +136,7 @@ public abstract class Personnages {
         return charisme;
     }
 
+    protected void setPv(int pv) {
+        this.pv = pv;
+    }
 }
